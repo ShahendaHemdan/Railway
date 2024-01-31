@@ -22,11 +22,6 @@ export class TripsService {
 
     }
 
-    // createTrip(tripDetails:Trip){
-    //     const newTrip=this.tripRepository.create(tripDetails);
-    //     return this.tripRepository.save(newTrip);
-    // }
-
 
 
     async createTripWithDetails(routeId: number, trainId: number, tripDetails: Partial<Trip>): Promise<Trip> {
@@ -39,6 +34,7 @@ export class TripsService {
 
         const newTrip = this.tripRepository.create({
             ...tripDetails,
+            arrTime: tripDetails.arrTime || new Date(),
             Route: route,
             Train: train,
         });

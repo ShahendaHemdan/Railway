@@ -16,6 +16,10 @@ import { TicketsModule } from './tickets/tickets.module';
 import { Ticket } from './TypeORM/entities/Tickets';
 import { Delay } from './TypeORM/entities/Delay';
 import { DelaysModule } from './delays/delays.module';
+import { ScheduleModule } from '@nestjs/schedule';
+// import { DelaysService } from './delays/services/delays/delays.service';
+// import { YourCronJobService } from 'src/delays/services/delays';
+
 
 @Module({
   imports: [
@@ -35,7 +39,8 @@ import { DelaysModule } from './delays/delays.module';
     RoutesModule,
     TripsModule,
     TicketsModule,
-    DelaysModule
+    DelaysModule,
+    ScheduleModule.forRoot()
   ],
   controllers: [AppController],
   providers: [AppService],

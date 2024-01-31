@@ -10,10 +10,13 @@ import { TripsService } from 'src/trips/services/trips/trips.service';
 import { StationsService } from 'src/stations/services/stations/stations.service';
 import { Delay } from 'src/TypeORM/entities/Delay';
 import { Route } from 'src/TypeORM/entities/Route';
+import { ScheduleModule } from '@nestjs/schedule';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Station,Trip,Train,Delay,Route])],
+  imports: [TypeOrmModule.forFeature([Station,Trip,Train,Delay,Route]),
+  ScheduleModule.forRoot(), 
+],
   providers: [DelaysService,TrainsService,TripsService,StationsService],
   controllers: [DelaysController]
 })

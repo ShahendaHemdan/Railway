@@ -15,23 +15,31 @@ export class Delay {
     @Column()
     duration: number;
 
-
-    // Define the relationship with Train entity
-    @OneToOne(() => Train, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-    @JoinColumn()
-    Train: Train;
+    @Column({ default: false })
+    processed: boolean;
 
 
 
-    // Define the relationship with Station entity
-    @OneToOne(() => Station, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-    @JoinColumn()
-    Station: Station;
+
+    // // Define the relationship with Station entity
+    // @OneToOne(() => Station, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+    // @JoinColumn()
+    // Station: Station;
 
 
-    // Define the relationship with Station entity
-    @OneToOne(() => Trip, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+    // // Define the relationship with Station entity
+    // @OneToOne(() => Trip, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+    // @JoinColumn()
+    // Trip: Trip;
+
+    // Define the relationship with Trip entity
+    @ManyToOne(() => Trip, trip => trip.delays, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     @JoinColumn()
     Trip: Trip;
+
+    // Define the relationship with Station entity
+    @ManyToOne(() => Station, station => station.delays, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+    @JoinColumn()
+    Station: Station;
 
 }

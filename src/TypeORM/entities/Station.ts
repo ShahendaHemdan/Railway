@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn,ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn,ManyToOne, OneToMany } from 'typeorm';
 import { Route } from './Route';
+import { Delay } from './Delay';
 
 @Entity()
 export class Station{
@@ -13,15 +14,16 @@ export class Station{
 
     
 
-    // Define the relationship with Train entity
-    // @OneToMany(() => Train, train => train.station, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-    // trains: Train[];
 
 
     // Define the relationship with Route entity
     @ManyToOne(() => Route, route => route.stations)
     route: Route;
 
+
+    // Define the relationship with Delay entity
+    @OneToMany(() => Delay, delay => delay.Station, { cascade: true })
+    delays: Delay[];
 
 }
 

@@ -47,11 +47,10 @@ export class DelaysController {
     @Post('create')
     async createDelay(@Body() DelayDetails: DelayDTO,@Res() res:Response) {
 
-        const {tripId,trainId,stationId}=DelayDetails;
+        const {tripId,stationId}=DelayDetails;
         const trip = await this.tripsService.findTripById(tripId);
-        const train = await this.trainsService.findTrainById(trainId);
         const station = await this.stationsService.findStationById(stationId );
-        if (!trip || !train || !station) {
+        if (!trip  || !station) {
             throw new HttpException('Error not found', HttpStatus.NOT_FOUND);
         }else{
 
@@ -89,6 +88,10 @@ export class DelaysController {
         }
     }
 
+
+
+
+    
 }
 
 

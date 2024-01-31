@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, OneToMany } from 'typeorm';
 import { Route } from './Route';
 import { Train } from './Train';
+import { Delay } from './Delay';
 @Entity()
 export class Trip {
 
@@ -12,11 +13,11 @@ export class Trip {
 
 
     @Column()
-    arrTime: number;
+    arrTime: Date;
 
 
     @Column()
-    deptTime: number;
+    deptTime: Date;
 
     @Column()
     date: Date;
@@ -40,7 +41,9 @@ export class Trip {
     @JoinColumn()
     Train: Train
     
-
+    // Define the relationship with Delay entity
+    @OneToMany(() => Delay, delay => delay.Trip, { cascade: true })
+    delays: Delay[];
 
 
 }
