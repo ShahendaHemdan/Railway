@@ -17,12 +17,12 @@ export class TripsService {
     
     }
     findAllTrips(){
-        return this.tripRepository.find({relations:["Route","Train"]});
+        return this.tripRepository.find({relations:["Train","delays"]});
     }
 
 
     findTripById(id:number){
-        return this.tripRepository.findOne({ where: { id }, relations: ["Route","Train"] });
+        return this.tripRepository.findOne({ where: { id }, relations: ["Train","delays"] });
 
     }
 

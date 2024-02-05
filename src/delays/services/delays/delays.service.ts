@@ -28,12 +28,12 @@ export class DelaysService  {
 
 
     findAllDelays() {
-        return this.delayRepository.find({ relations: ["Trip", "Train", "Station"] });
+        return this.delayRepository.find({ relations: ["Trip",  "Station"] });
     }
 
 
     findDelayById(id: number) {
-        return this.delayRepository.findOne({ where: { id }, relations: ["Trip", "Train", "Station"] });
+        return this.delayRepository.findOne({ where: { id }, relations: ["Trip",  "Station"] });
 
     }
 

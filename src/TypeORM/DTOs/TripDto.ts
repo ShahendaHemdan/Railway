@@ -1,6 +1,5 @@
 import { Trip } from '../entities/Trip';
-import { DelayDTO } from './DelayDto2';
-import { RouteTripDTO } from './RouteTripDto';
+import { DelayForTripDTO } from './DelayForTripDto';
 import { TrainTripDTO } from './TrainTripDto';
 
 
@@ -11,9 +10,9 @@ export class TripDTO {
     deptTime: Date;
     origin: string;
     destination: string;
-    route: RouteTripDTO;
+    // route: RouteTripDTO;
     train: TrainTripDTO;
-    delays: DelayDTO[]; 
+    delays: DelayForTripDTO[]; 
 
     constructor(data: TripDTO) {
         this.id = data?.id || 0;
@@ -22,7 +21,7 @@ export class TripDTO {
         this.deptTime = data.deptTime;
         this.origin = data.origin;
         this.destination = data.destination;
-        this.route = data.route;
+        // this.route = data.route;
         this.train = data.train;
         this.delays = data.delays || [];
     }
@@ -35,9 +34,8 @@ export class TripDTO {
             deptTime: entity.deptTime,
             origin: entity.origin,
             destination: entity.destination,
-            route: RouteTripDTO.fromPlainObject(entity.Route),
             train: TrainTripDTO.fromPlainObject(entity.Train),
-            delays: entity.delays ? entity.delays.map(delay => DelayDTO.createFromEntity(delay)) : [],
+            delays: entity.delays ? entity.delays.map(delay => DelayForTripDTO.createFromEntity(delay)) : [],
 
         });
 
