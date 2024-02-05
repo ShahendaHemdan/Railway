@@ -1,16 +1,20 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import {   Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Trip } from 'src/TypeORM/entities/Trip';
 import { Route } from 'src/TypeORM/entities/Route';
 import { Train } from 'src/TypeORM/entities/Train';
+
+
 @Injectable()
 export class TripsService {
 
+
     constructor(@InjectRepository(Trip) private tripRepository:Repository<Trip>,
     @InjectRepository(Route) private routeRepository: Repository<Route>,
-    @InjectRepository(Train) private trainRepository: Repository<Train>,){
-
+    @InjectRepository(Train) private trainRepository: Repository<Train>,
+    ){
+    
     }
     findAllTrips(){
         return this.tripRepository.find({relations:["Route","Train"]});
@@ -49,4 +53,7 @@ export class TripsService {
     deleteTrip(id:number){
         return this.tripRepository.delete({id});
     }
+
+
+
 }

@@ -5,12 +5,14 @@ export class DelayDTO {
     duration: number;
     tripId: number;
     stationId: number;
+    timestamp: Date;
 
     constructor(data: DelayDTO) {
         this.id = data.id ;
         this.duration = data.duration;
         this.tripId = data.tripId;
         this.stationId = data.stationId;
+        this.timestamp = data.timestamp
 
     }
 
@@ -20,6 +22,7 @@ export class DelayDTO {
             duration: delay.duration,
             tripId: delay.Trip ? delay.Trip.id : null,
             stationId: delay.Station ? delay.Station.id : null, 
+            timestamp: delay.timestamp ,
         });
 
         return delayDTO;

@@ -20,12 +20,6 @@ export class Trip {
     deptTime: Date;
 
     @Column()
-    date: Date;
-
-    @Column()
-    duration: number;
-
-    @Column()
     origin: string;
 
     @Column()

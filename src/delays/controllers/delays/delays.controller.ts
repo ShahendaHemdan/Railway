@@ -3,13 +3,11 @@ import { DelayDTO } from 'src/TypeORM/DTOs/DelayDto2';
 import { DelaysService } from 'src/delays/services/delays/delays.service';
 import { Response } from 'express';
 import { Delay } from 'src/TypeORM/entities/Delay';
-import { TrainsService } from 'src/trains/services/trains/trains.service';
 import { TripsService } from 'src/trips/services/trips/trips.service';
 import { StationsService } from 'src/stations/services/stations/stations.service';
 @Controller('delays')
 export class DelaysController {
     constructor(private delayService:DelaysService,
-        private trainsService:TrainsService,
         private tripsService:TripsService,
         private stationsService:StationsService,
 
@@ -87,6 +85,9 @@ export class DelaysController {
             throw new HttpException('There is no such Delay',HttpStatus.NOT_FOUND);
         }
     }
+
+
+
 
 
 

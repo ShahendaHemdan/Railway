@@ -6,18 +6,25 @@ import { DelayDTO } from 'src/TypeORM/DTOs/DelayDto2';
 import { Trip } from 'src/TypeORM/entities/Trip';
 import { TripsService } from 'src/trips/services/trips/trips.service';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 
 
 @Injectable()
-export class DelaysService {
+export class DelaysService  {
+
+    
     constructor(
         @InjectRepository(Delay) private delayRepository: Repository<Delay>,
         @InjectRepository(Trip) private tripRepository: Repository<Trip>,
         private tripsService: TripsService,
+        private eventEmitter: EventEmitter2
     ) {
-        console.log('DelaysService instantiated');
+       
     }
+
+
+
 
 
     findAllDelays() {
@@ -35,7 +42,10 @@ export class DelaysService {
     async createDelaytWithDetails(delayDetails: DelayDTO): Promise<Delay> {
 
         const newDelay = this.delayRepository.create(delayDetails);
-        return this.delayRepository.save(newDelay);
+        const createdDelay = await this.delayRepository.save(newDelay);
+    
+        this.eventEmitter.emit('Delay Added');
+        return createdDelay;
 
 
     }
@@ -59,28 +69,26 @@ export class DelaysService {
     }
 
 
-    @Cron(CronExpression.EVERY_10_SECONDS) // Adjust the cron expression as needed
+    @Cron(CronExpression.EVERY_10_SECONDS)
     async processDelaysAutomatically() {
-
-
         const delays = await this.delayRepository.find({ relations: ['Trip'], where: { processed: false } });
-
+    
         for (const delay of delays) {
             const trip = await this.tripsService.findTripById(delay.Trip.id);
-
+    
             if (trip) {
                 // Get the current arrival time and add delay duration
                 const newArrTime = new Date(trip.arrTime.getTime() + delay.duration * 60000); // Convert minutes to milliseconds
-
+    
                 // Update the trip's arrival time
                 trip.arrTime = newArrTime;
-
+    
                 // Save the updated trip
-                await this.tripRepository.save(trip);
-
-
+                const savedTrip = await this.tripRepository.save(trip);
+    
                 // Mark the delay as processed
                 delay.processed = true;
+    
                 // Save the updated delay
                 await this.delayRepository.save(delay);
             }
@@ -88,6 +96,8 @@ export class DelaysService {
     }
 
 
+
+   
 }
 
 

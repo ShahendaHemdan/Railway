@@ -19,7 +19,8 @@ export class Delay {
     processed: boolean;
 
 
-
+    @Column({ default: () => 'CURRENT_TIMESTAMP' })
+    timestamp: Date;
 
     // // Define the relationship with Station entity
     // @OneToOne(() => Station, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
